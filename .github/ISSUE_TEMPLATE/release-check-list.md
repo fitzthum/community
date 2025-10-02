@@ -72,7 +72,7 @@ Identify/create the bundles that we will release for Kata and enclave-cc.
     If you absolutely cannot use a Kata release,
     you can consider releasing one of these bundles.
 
-- [ ] 3. :eyes: **Create a peer pods release**
+- [ ] 3. :wrench: **Create a peer pods release**
 
     Create a peer pods release based on the Kata release, by following the [documented flow](https://github.com/confidential-containers/cloud-api-adaptor/blob/main/docs/Release-Process.md).
 
@@ -118,9 +118,31 @@ Identify/create the bundles that we will release for Kata and enclave-cc.
 
 - [ ] 7. :green_book: **Make sure to update the [release notes](https://github.com/confidential-containers/confidential-containers/tree/main/releases) and tag/release the confidential-containers repo using the GitHub release tool.**
 
-- [ ] 8. :hammer: **Poke Wainer Moschetta (@wainersm) to update the release to the OperatorHub. Find the documented flow [here](https://github.com/confidential-containers/operator/blob/main/docs/OPERATOR_HUB.md).**
-
 ### Post-release
 
-- [ ] 9. :wrench: **Open a PR to the operator to go back to latest payloads after release**
+- [ ] 8. :wrench: **Open a PR to the operator to go back to latest payloads after release**
     After the release, the operator's payloads need to go back to what they were (e.g. using "latest" instead of a specific commit sha). As an example, the v0.9.0-alpha1 release applied [these changes](https://github.com/confidential-containers/operator/pull/389/files). You should use `git revert -s` for this.
+
+- [ ] 9. :pushpin: **Tag the version of guest-components used in the release**.
+
+    Go look at [versions.yaml](https://github.com/kata-containers/kata-containers/blob/main/versions.yaml)
+    in Kata Containers and find the version of the guest-components that was used in the Kata release.
+    Tag this commit in guest-components with the latest version of guest components.
+    Note that the version of guest-components might not be the same as the version of CoCo.
+
+- [ ] 10. :scissors: **Cut a release of guest-components using GitHub release tool**
+
+- [ ] 11. :pushpin: **Tag the version of Trustee used in the release**
+
+    Follow the same process as step 9 but for Trustee.
+
+- [ ] 12. :scissors: **Cut a release of Trustee using GitHub release tool**
+
+- [ ] 13. :wrench: **Tag the Trustee release images**
+
+    Use the Trustee release helper script to push the CI images corresponding to the released hash
+    as the release images.
+
+- [ ] 14. :pushpin: **Tag the latest version of the website for the release**
+
+    Make sure the website is up-to-date for the latest release, and then tag the repo.
